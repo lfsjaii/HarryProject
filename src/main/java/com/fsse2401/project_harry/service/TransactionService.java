@@ -9,8 +9,7 @@ public interface TransactionService {
 
     TransactionResponseData getAllTransaction(FirebaseUserData firebaseUserData, Integer tid);
 
+    boolean payTransaction(FirebaseUserData firebaseUserData, Integer tid);
 
-    TransactionResponseData updateTransactionStatus(FirebaseUserData firebaseUserData, Integer tid);
-
-    TransactionResponseData successTransaction(FirebaseUserData firebaseUserData, Integer tid);
+    TransactionResponseData finishTransaction(FirebaseUserData firebaseUserData, Integer tid);
 }

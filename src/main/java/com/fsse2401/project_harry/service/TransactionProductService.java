@@ -7,5 +7,7 @@ import com.fsse2401.project_harry.data.transaction_product.entity.TransactionPro
 import java.util.List;
 
 public interface TransactionProductService {
-    TransactionEntity createNewTransactionProduct(List<CartItemEntity> cartItemEntityList, TransactionEntity transactionEntity);
+    TransactionProductEntity createNewTransactionProduct(TransactionEntity transactionEntity ,CartItemEntity cartItemEntity);
+
+    List<TransactionProductEntity> getEntityListByTransaction(TransactionEntity transactionEntity);
 }

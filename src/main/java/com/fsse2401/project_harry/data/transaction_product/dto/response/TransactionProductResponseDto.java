@@ -12,13 +12,13 @@ public class TransactionProductResponseDto {
     @JsonProperty("product")
     private ProductResponseDto productResponseDto;
     private Integer quantity;
-    private BigDecimal subtotal = BigDecimal.ZERO;
+    private BigDecimal subtotal;
 
     public TransactionProductResponseDto(TransactionProductResponseData data) {
         this.tpid = data.getTpid();
-        this.productResponseDto = new ProductResponseDto(data.getProductResponseData());
+        this.productResponseDto = new ProductResponseDto(data);
         this.quantity = data.getQuantity();
-        this.subtotal = data.getSubtotal();
+        this.subtotal = data.getPrice().multiply(new BigDecimal(data.getQuantity()));
     }
 
     public Integer getTpid() {

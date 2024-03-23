@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(HttpStatus.NOT_FOUND)
 public class TransactionNotFoundException extends RuntimeException {
-    public TransactionNotFoundException(Integer tid, UserEntity userEntity){
-        super(String.format("Transaction Not Found tid:%s firebase:%s",tid,userEntity));
+    public TransactionNotFoundException(Integer tid, String firebaseUid){
+        super(String.format("Transaction Not Found-tid:%d firebase:%s",tid,firebaseUid));
     }
 }

@@ -1,14 +1,12 @@
 package com.fsse2401.project_harry.data.transaction.entity;
 
-import com.fsse2401.project_harry.data.cartitem.entity.CartItemEntity;
-import com.fsse2401.project_harry.data.transaction_product.entity.TransactionProductEntity;
+import com.fsse2401.project_harry.data.cartitem.status.TransactionStatus;
 import com.fsse2401.project_harry.data.user.entity.UserEntity;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+
 
 
 @Entity
@@ -23,25 +21,21 @@ public class TransactionEntity {
     @Column(nullable = false)
     private LocalDateTime datetime;
     @Column(nullable = false)
-    private String status;
+    @Enumerated(EnumType.STRING)
+    private TransactionStatus status;
     @Column(nullable = false)
-    private BigDecimal total = BigDecimal.ZERO;
-    @OneToMany(mappedBy = "transaction")
-    List<TransactionProductEntity> productsHasInTransaction = new ArrayList<>();
+    private BigDecimal total;
+
 
 
     public TransactionEntity() {
     }
 
-    public TransactionEntity(UserEntity user, String status, List<CartItemEntity> cartItemEntityList) {
+    public TransactionEntity(UserEntity user) {
         this.user = user;
         this.datetime = LocalDateTime.now();
-        this.status = status;
-
-        for (CartItemEntity cartItemEntity : cartItemEntityList)
-        {
-            total = total.add(cartItemEntity.getProduct().getPrice().multiply(new BigDecimal(cartItemEntity.getQuantity())));
-        }
+        this.status = TransactionStatus.PREPARE;
+        this.total = BigDecimal.ZERO;
     }
 
     public Integer getTid() {
@@ -68,11 +62,11 @@ public class TransactionEntity {
         this.datetime = datetime;
     }
 
-    public String getStatus() {
+    public TransactionStatus getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(TransactionStatus status) {
         this.status = status;
     }
 
@@ -82,13 +76,5 @@ public class TransactionEntity {
 
     public void setTotal(BigDecimal total) {
         this.total = total;
-    }
-
-    public List<TransactionProductEntity> getProductsHasInTransaction() {
-        return productsHasInTransaction;
-    }
-
-    public void setProductsHasInTransaction(List<TransactionProductEntity> productsHasInTransaction) {
-        this.productsHasInTransaction = productsHasInTransaction;
     }
 }

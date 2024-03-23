@@ -33,23 +33,20 @@ public class CartItemApi {
     @GetMapping
     public List<GetCartItemResponseDto> getUserCartItems(JwtAuthenticationToken jwtToken)
     {
-        List<GetCartItemResponseData> cartItemResponseDataList = cartItemService.getUserCartItem(JwtUtil.getFirebaseUserData(jwtToken));
+        List<GetCartItemResponseData> responseDataList = cartItemService.getUserCartItem(JwtUtil.getFirebaseUserData(jwtToken));
 
-        List<GetCartItemResponseDto> cartItemResponseDtoList = new ArrayList<>();
-        for (GetCartItemResponseData cartItemResponseData : cartItemResponseDataList)
-        {
-            GetCartItemResponseDto cartItemResponseDto = new GetCartItemResponseDto(cartItemResponseData);
-            cartItemResponseDtoList.add(cartItemResponseDto);
+        List<GetCartItemResponseDto> responseDtoList = new ArrayList<>();
+        for (GetCartItemResponseData data : responseDataList) {
+            responseDtoList.add(new GetCartItemResponseDto(data));
         }
 
-        return cartItemResponseDtoList;
+        return responseDtoList;
     }
 
     @PatchMapping("/{pid}/{quantity}")
     public GetCartItemResponseDto updateCartQuantity(@PathVariable Integer pid, @PathVariable Integer quantity, JwtAuthenticationToken jwtToken){
-
-        return new GetCartItemResponseDto(cartItemService.upDateCartItem(pid, quantity, JwtUtil.getFirebaseUserData(jwtToken)));
-
+        GetCartItemResponseData getCartItemResponseData = cartItemService.upDateCartItem(pid, quantity, JwtUtil.getFirebaseUserData(jwtToken));
+        return new GetCartItemResponseDto(getCartItemResponseData);
     }
 
     @DeleteMapping("/{pid}")

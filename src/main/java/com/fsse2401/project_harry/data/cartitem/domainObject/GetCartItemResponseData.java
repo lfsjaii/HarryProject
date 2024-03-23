@@ -1,76 +1,70 @@
 package com.fsse2401.project_harry.data.cartitem.domainObject;
 
-import com.fasterxml.jackson.annotation.JsonAnyGetter;
-import com.fasterxml.jackson.annotation.JsonAnySetter;
-import com.fasterxml.jackson.annotation.JsonGetter;
-import com.fsse2401.project_harry.data.cartitem.dto.response.GetCartItemResponseDto;
 import com.fsse2401.project_harry.data.cartitem.entity.CartItemEntity;
-import com.fsse2401.project_harry.data.product.entity.ProductEntity;
+import com.fsse2401.project_harry.data.product.domainObject.ProductResponseData;
+import com.fsse2401.project_harry.data.user.domainObject.UserResponseData;
+
 
 import java.math.BigDecimal;
 
 public class GetCartItemResponseData {
-    private Integer pid;
-    private String name;
-    private String imageUrl;
-    private BigDecimal price;
-    private Integer cartQuantity;
-    private Integer stock;
+    private Integer cid;
+    private ProductResponseData product;
+    private UserResponseData user;
+    private Integer quantity;
 
     public GetCartItemResponseData(CartItemEntity entity) {
-        this.pid = entity.getProduct().getPid();
-        this.name = entity.getProduct().getName();
-        this.imageUrl = entity.getProduct().getImageUrl();
-        this.price = entity.getProduct().getPrice();
-        this.cartQuantity = entity.getQuantity();
-        this.stock = entity.getProduct().getStock();
+        this.cid = entity.getCid();
+        this.product = new ProductResponseData(entity.getProduct());
+        this.user = new UserResponseData(entity.getUser());
+        this.quantity = entity.getQuantity();
     }
 
-    public Integer getPid() {
-        return pid;
+    public Integer getCid() {
+        return cid;
     }
 
-    public void setPid(Integer pid) {
-        this.pid = pid;
+    public void setCid(Integer cid) {
+        this.cid = cid;
     }
 
-    public String getName() {
-        return name;
+    public ProductResponseData getProduct() {
+        return product;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setProduct(ProductResponseData product) {
+        this.product = product;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
+    public UserResponseData getUser() {
+        return user;
     }
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+    public void setUser(UserResponseData user) {
+        this.user = user;
     }
 
-    public BigDecimal getPrice() {
-        return price;
+    public Integer getQuantity() {
+        return quantity;
     }
 
-    public void setPrice(BigDecimal price) {
-        this.price = price;
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
     }
 
-    public Integer getCartQuantity() {
-        return cartQuantity;
-    }
-
-    public void setCartQuantity(Integer cartQuantity) {
-        this.cartQuantity = cartQuantity;
-    }
-
-    public Integer getStock() {
-        return stock;
-    }
-
-    public void setStock(Integer stock) {
-        this.stock = stock;
-    }
+    //    private Integer pid;
+//    private String name;
+//    private String imageUrl;
+//    private BigDecimal price;
+//    private Integer cartQuantity;
+//    private Integer stock;
+//
+//    public GetCartItemResponseData(CartItemEntity entity) {
+//        this.pid = entity.getProduct().getPid();
+//        this.name = entity.getProduct().getName();
+//        this.imageUrl = entity.getProduct().getImageUrl();
+//        this.price = entity.getProduct().getPrice();
+//        this.cartQuantity = entity.getQuantity();
+//        this.stock = entity.getProduct().getStock();
+//    }
 }

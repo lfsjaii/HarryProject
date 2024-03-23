@@ -7,7 +7,7 @@ public class FirebaseUserData {
     private String email;
 
     public FirebaseUserData(JwtAuthenticationToken jwtToken) {
-        this.firebaseUid = (String) jwtToken.getTokenAttributes().get("user_id");
+        this.firebaseUid =  (String) jwtToken.getTokenAttributes().get("user_id");
         this.email = (String) jwtToken.getTokenAttributes().get("email");
     }
 

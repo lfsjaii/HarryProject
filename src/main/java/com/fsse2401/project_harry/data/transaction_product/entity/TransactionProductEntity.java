@@ -5,8 +5,6 @@ import com.fsse2401.project_harry.data.transaction.entity.TransactionEntity;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Table(name="transaction_product")
@@ -21,9 +19,7 @@ public class TransactionProductEntity {
     private Integer pid;
     @Column(nullable = false)
     private String name;
-    @Column(nullable = false)
     private String description;
-    @Column(name = "image_url" ,nullable = false)
     private String imageUrl;
     @Column(nullable = false)
     private BigDecimal price;
@@ -36,8 +32,8 @@ public class TransactionProductEntity {
     public TransactionProductEntity() {
     }
 
-    public TransactionProductEntity(TransactionEntity entity,CartItemEntity cartItemEntity) {
-        this.transaction = entity;
+    public TransactionProductEntity(TransactionEntity transactionEntity,CartItemEntity cartItemEntity) {
+        this.transaction = transactionEntity;
         this.pid = cartItemEntity.getProduct().getPid();
         this.name = cartItemEntity.getProduct().getName();
         this.description = cartItemEntity.getProduct().getDescription();

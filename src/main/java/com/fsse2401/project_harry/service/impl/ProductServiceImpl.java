@@ -2,8 +2,6 @@ package com.fsse2401.project_harry.service.impl;
 
 import com.fsse2401.project_harry.data.product.domainObject.ProductResponseData;
 import com.fsse2401.project_harry.data.product.entity.ProductEntity;
-import com.fsse2401.project_harry.data.transaction.entity.TransactionEntity;
-import com.fsse2401.project_harry.data.transaction_product.entity.TransactionProductEntity;
 import com.fsse2401.project_harry.exception.product.ProductNotFoundException;
 import com.fsse2401.project_harry.exception.product.ProductNullPointerException;
 import com.fsse2401.project_harry.repository.ProductRepository;
@@ -11,7 +9,6 @@ import com.fsse2401.project_harry.service.ProductService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -78,17 +75,31 @@ public class ProductServiceImpl implements ProductService {
         }
         return true;
     }
+
     @Override
-    public void reduceStock(TransactionEntity transactionEntity){
-        for (TransactionProductEntity transactionProductEntity : transactionEntity.getProductsHasInTransaction())
-        {
-            ProductEntity productEntity = getEntityByPid(transactionProductEntity.getPid());
-            productEntity.setStock(productEntity.getStock() - transactionProductEntity.getQuantity());
-            productRepository.save(productEntity);
+    public boolean isValidQuantity(Integer pid, Integer quantity) {
+        ProductEntity entity = getEntityByPid(pid);
+        if(quantity < 1) {
+            return false;
+        } else if(quantity > entity.getStock()){
+            return false;
         }
+        return true;
     }
+
+
+//    @Override
+//    public void reduceStock(TransactionEntity transactionEntity){
+//        for (TransactionProductEntity transactionProductEntity : transactionEntity.getProductsHasInTransaction())
+//        {
+//            ProductEntity productEntity = getEntityByPid(transactionProductEntity.getPid());
+//            productEntity.setStock(productEntity.getStock() - transactionProductEntity.getQuantity());
+//            productRepository.save(productEntity);
+//        }
+//    }
     @Override
-    public boolean deductStock(ProductEntity entity, int amount) {
+    public boolean deductStock(int pid, int amount) {
+        ProductEntity entity = getEntityByPid(pid);
         if(!isValidQuantity(entity,amount)) {
             return false;
         }

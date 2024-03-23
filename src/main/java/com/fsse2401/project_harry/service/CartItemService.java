@@ -17,7 +17,9 @@ public interface CartItemService {
 
     boolean deleteCartItemByPid(FirebaseUserData firebaseUserData, Integer pid);
 
+    List<CartItemEntity> getEntityListByUser(UserEntity userEntity);
+
     List<CartItemEntity> getAllUserEntity(UserEntity userEntity);
 
-    void deleteAllCartItemsforUser(UserEntity userEntity);
+    void emptyUserCart(String firebaseUid);
 }

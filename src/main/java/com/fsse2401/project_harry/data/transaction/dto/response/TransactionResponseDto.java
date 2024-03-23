@@ -1,11 +1,14 @@
 package com.fsse2401.project_harry.data.transaction.dto.response;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fsse2401.project_harry.data.cartitem.status.TransactionStatus;
 import com.fsse2401.project_harry.data.transaction.domainObject.TransactionResponseData;
 import com.fsse2401.project_harry.data.transaction_product.domainObject.TransactionProductResponseData;
 import com.fsse2401.project_harry.data.transaction_product.dto.response.TransactionProductResponseDto;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,23 +18,25 @@ public class TransactionResponseDto {
     @JsonProperty("buyer_uid")
     private Integer buyerUid;
 
-    private String dateTime;
 
-    private String status;
+    @JsonFormat(pattern = "yyyyMMdd'T'HH:mm:ss")
+    private LocalDateTime dateTime;
+
+    private TransactionStatus status;
 
     private BigDecimal total;
 
     @JsonProperty("items")
-    List<TransactionProductResponseDto> productsHasInTransactionResponseDtoList = new ArrayList<>();
+    List<TransactionProductResponseDto> item = new ArrayList<>();
 
     public TransactionResponseDto(TransactionResponseData data) {
         this.tid = data.getTid();
-        this.buyerUid = data.getBuyerUid();
+        this.buyerUid = data.getUser().getUid();
         this.dateTime = data.getDateTime();
         this.status = data.getStatus();
         this.total = data.getTotal();
-        for (TransactionProductResponseData transactionProductResponseData : data.getProductsHasInTransactionResponseList()) {
-            productsHasInTransactionResponseDtoList.add(new TransactionProductResponseDto (transactionProductResponseData));
+        for (TransactionProductResponseData item : data.getTransactionProductList()) {
+            this.item.add(new TransactionProductResponseDto(item));
         }
     }
 
@@ -51,19 +56,19 @@ public class TransactionResponseDto {
         this.buyerUid = buyerUid;
     }
 
-    public String getDateTime() {
+    public LocalDateTime getDateTime() {
         return dateTime;
     }
 
-    public void setDateTime(String dateTime) {
+    public void setDateTime(LocalDateTime dateTime) {
         this.dateTime = dateTime;
     }
 
-    public String getStatus() {
+    public TransactionStatus getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(TransactionStatus status) {
         this.status = status;
     }
 
@@ -75,11 +80,11 @@ public class TransactionResponseDto {
         this.total = total;
     }
 
-    public List<TransactionProductResponseDto> getProductsHasInTransactionResponseDtoList() {
-        return productsHasInTransactionResponseDtoList;
+    public List<TransactionProductResponseDto> getItem() {
+        return item;
     }
 
-    public void setProductsHasInTransactionResponseDtoList(List<TransactionProductResponseDto> productsHasInTransactionResponseDtoList) {
-        this.productsHasInTransactionResponseDtoList = productsHasInTransactionResponseDtoList;
+    public void setItem(List<TransactionProductResponseDto> item) {
+        this.item = item;
     }
 }

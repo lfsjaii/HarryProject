@@ -1,8 +1,8 @@
 package com.fsse2401.project_harry.api;
 
-import com.fsse2401.project_harry.data.cartitem.dto.response.CartItemSuccessDto;
 import com.fsse2401.project_harry.data.transaction.domainObject.TransactionResponseData;
 import com.fsse2401.project_harry.data.transaction.dto.response.TransactionResponseDto;
+import com.fsse2401.project_harry.data.transaction.dto.response.TransactionSuccessDto;
 import com.fsse2401.project_harry.service.TransactionService;
 import com.fsse2401.project_harry.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,24 +27,17 @@ public class TransactionApi {
 
     @GetMapping("/{tid}")
     public TransactionResponseDto getAllTransaction(JwtAuthenticationToken jwtToken, @PathVariable Integer tid){
-        TransactionResponseData transactionResponseData = transactionService.getAllTransaction(JwtUtil.getFirebaseUserData(jwtToken),tid);
-        TransactionResponseDto transactionResponseDto = new TransactionResponseDto(transactionResponseData);
-        return transactionResponseDto;
+        return new TransactionResponseDto(transactionService.getAllTransaction(JwtUtil.getFirebaseUserData(jwtToken),tid));
     }
 
     @PatchMapping("/{tid}/pay")
-    public TransactionResponseDto updateTransactionStatus(JwtAuthenticationToken jwtToken, @PathVariable Integer tid) {
-        {
-            TransactionResponseData transactionResponseData = transactionService.updateTransactionStatus(JwtUtil.getFirebaseUserData(jwtToken),tid);
-            TransactionResponseDto transactionResponseDto = new TransactionResponseDto(transactionResponseData);
-            return transactionResponseDto;
-        }
+    public TransactionSuccessDto payTransactionStatus(JwtAuthenticationToken jwtToken, @PathVariable Integer tid) {
+        transactionService.payTransaction(JwtUtil.getFirebaseUserData(jwtToken),tid);
+        return new TransactionSuccessDto();
     }
 
     @PatchMapping("/{tid}/finish")
-    public TransactionResponseDto successTransaction (@PathVariable Integer tid, JwtAuthenticationToken jwtToken){
-        TransactionResponseData transactionResponseData = transactionService.successTransaction(JwtUtil.getFirebaseUserData(jwtToken), tid);
-        TransactionResponseDto transactionResponseDto = new TransactionResponseDto(transactionResponseData);
-        return transactionResponseDto;
+    public TransactionResponseDto successTransaction(@PathVariable Integer tid, JwtAuthenticationToken jwtToken){
+        return new TransactionResponseDto(transactionService.finishTransaction(JwtUtil.getFirebaseUserData(jwtToken),tid));
     }
 }

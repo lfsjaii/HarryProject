@@ -23,11 +23,12 @@ public class TransactionProductServiceImpl implements TransactionProductService 
 
 
     @Override
-    public TransactionEntity createNewTransactionProduct(List<CartItemEntity> cartItemEntityList, TransactionEntity transactionEntity) {
-        for (CartItemEntity cartItemEntity : cartItemEntityList) {
-            transactionEntity.getProductsHasInTransaction().add(
-                    transactionProductRepository.save(new TransactionProductEntity(transactionEntity, cartItemEntity)));
-        }
-        return transactionEntity;
+    public TransactionProductEntity createNewTransactionProduct(TransactionEntity transactionEntity ,CartItemEntity cartItemEntity) {
+        TransactionProductEntity transactionProductEntity = new TransactionProductEntity(transactionEntity, cartItemEntity);
+        return transactionProductRepository.save(transactionProductEntity);
+    }
+    @Override
+    public List<TransactionProductEntity> getEntityListByTransaction(TransactionEntity transactionEntity) {
+        return transactionProductRepository.findAllByTransaction(transactionEntity);
     }
 }

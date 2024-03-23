@@ -1,9 +1,9 @@
-package com.fsse2401.project_harry.data.cartitem.dto.response;
+package com.fsse2401.project_harry.data.transaction.dto.response;
 
-public class CartItemSuccessDto {
+public class TransactionSuccessDto {
     private String result;
 
-    public CartItemSuccessDto() {
+    public TransactionSuccessDto() {
         setResult("SUCCESS");
     }
 

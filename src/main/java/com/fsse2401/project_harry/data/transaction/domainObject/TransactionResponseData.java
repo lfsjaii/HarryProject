@@ -1,37 +1,35 @@
 package com.fsse2401.project_harry.data.transaction.domainObject;
 
+import com.fsse2401.project_harry.data.cartitem.status.TransactionStatus;
 import com.fsse2401.project_harry.data.transaction.entity.TransactionEntity;
 import com.fsse2401.project_harry.data.transaction_product.domainObject.TransactionProductResponseData;
 import com.fsse2401.project_harry.data.transaction_product.entity.TransactionProductEntity;
+import com.fsse2401.project_harry.data.user.domainObject.UserResponseData;
 
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
 public class TransactionResponseData {
     private Integer tid;
-
-    private Integer buyerUid;
-
-    private String dateTime;
-
-    private String status;
-
+    private UserResponseData user;
+    private LocalDateTime dateTime;
+    private TransactionStatus status;
     private BigDecimal total;
+    private List<TransactionProductResponseData> transactionProductList = new ArrayList<>();
 
-    private List<TransactionProductResponseData> productsHasInTransactionResponseList = new ArrayList<>();
-
-    public TransactionResponseData(TransactionEntity transactionEntity) {
-        this.tid = transactionEntity.getTid();
-        this.buyerUid = transactionEntity.getUser().getUid();
-        this.dateTime = transactionEntity.getDatetime().format(DateTimeFormatter.ofPattern("yyyyMMdd'T'HH:mm:ss"));
-        this.status = transactionEntity.getStatus();
-        this.total = transactionEntity.getTotal();
-        for ( TransactionProductEntity transactionProductEntity : transactionEntity.getProductsHasInTransaction())
-        {
-            productsHasInTransactionResponseList.add(new TransactionProductResponseData(transactionProductEntity));
+    public TransactionResponseData(TransactionEntity entity, List<TransactionProductEntity> transactionProductEntityList) {
+        this.tid = entity.getTid();
+        this.user = new UserResponseData(entity.getUser());
+        this.dateTime = entity.getDatetime();
+        this.status = entity.getStatus();
+        this.total = entity.getTotal();
+        for (TransactionProductEntity transactionProductEntity : transactionProductEntityList) {
+            TransactionProductResponseData transactionProductResponseData = new TransactionProductResponseData(transactionProductEntity);
+            this.transactionProductList.add(transactionProductResponseData);
         }
     }
 
@@ -43,27 +41,27 @@ public class TransactionResponseData {
         this.tid = tid;
     }
 
-    public Integer getBuyerUid() {
-        return buyerUid;
+    public UserResponseData getUser() {
+        return user;
     }
 
-    public void setBuyerUid(Integer buyerUid) {
-        this.buyerUid = buyerUid;
+    public void setUser(UserResponseData user) {
+        this.user = user;
     }
 
-    public String getDateTime() {
+    public LocalDateTime getDateTime() {
         return dateTime;
     }
 
-    public void setDateTime(String dateTime) {
+    public void setDateTime(LocalDateTime dateTime) {
         this.dateTime = dateTime;
     }
 
-    public String getStatus() {
+    public TransactionStatus getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(TransactionStatus status) {
         this.status = status;
     }
 
@@ -75,11 +73,11 @@ public class TransactionResponseData {
         this.total = total;
     }
 
-    public List<TransactionProductResponseData> getProductsHasInTransactionResponseList() {
-        return productsHasInTransactionResponseList;
+    public List<TransactionProductResponseData> getTransactionProductList() {
+        return transactionProductList;
     }
 
-    public void setProductsHasInTransactionResponseList(List<TransactionProductResponseData> productsHasInTransactionResponseList) {
-        this.productsHasInTransactionResponseList = productsHasInTransactionResponseList;
+    public void setTransactionProductList(List<TransactionProductResponseData> transactionProductList) {
+        this.transactionProductList = transactionProductList;
     }
 }

@@ -3,6 +3,7 @@ package com.fsse2401.project_harry.data.product.dto.response;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fsse2401.project_harry.data.product.domainObject.ProductResponseData;
+import com.fsse2401.project_harry.data.transaction_product.domainObject.TransactionProductResponseData;
 
 import java.math.BigDecimal;
 @JsonPropertyOrder({"pid", "name","description","imageUrl","price","stock"})
@@ -16,6 +17,15 @@ public class ProductResponseDto {
     private Integer stock;
 
     public ProductResponseDto(ProductResponseData data) {
+        this.pid = data.getPid();
+        this.name = data.getName();
+        this.description = data.getDescription();
+        this.imageUrl = data.getImageUrl();
+        this.price = data.getPrice();
+        this.stock = data.getStock();
+    }
+
+    public ProductResponseDto(TransactionProductResponseData data) {
         this.pid = data.getPid();
         this.name = data.getName();
         this.description = data.getDescription();
