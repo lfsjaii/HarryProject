@@ -5,7 +5,7 @@ import com.fsse2401.project_harry.data.product.domainObject.ProductResponseData;
 import com.fsse2401.project_harry.data.user.domainObject.UserResponseData;
 
 
-import java.math.BigDecimal;
+
 
 public class GetCartItemResponseData {
     private Integer cid;
@@ -51,20 +51,4 @@ public class GetCartItemResponseData {
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
     }
-
-    //    private Integer pid;
-//    private String name;
-//    private String imageUrl;
-//    private BigDecimal price;
-//    private Integer cartQuantity;
-//    private Integer stock;
-//
-//    public GetCartItemResponseData(CartItemEntity entity) {
-//        this.pid = entity.getProduct().getPid();
-//        this.name = entity.getProduct().getName();
-//        this.imageUrl = entity.getProduct().getImageUrl();
-//        this.price = entity.getProduct().getPrice();
-//        this.cartQuantity = entity.getQuantity();
-//        this.stock = entity.getProduct().getStock();
-//    }
 }

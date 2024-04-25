@@ -15,4 +15,6 @@ public interface CartItemRepository extends CrudRepository<CartItemEntity, Integ
     Integer deleteByProduct_PidAndUser_FirebaseUid(Integer pid, String firebase);
     List<CartItemEntity> findAllByUser(UserEntity userEntity);
     void deleteAllByUser_FirebaseUid(String firebaseUid);
+
+
 }

@@ -1,5 +1,6 @@
 package com.fsse2401.project_harry.api;
 
+import com.fsse2401.project_harry.config.EnvConfig;
 import com.fsse2401.project_harry.data.transaction.domainObject.TransactionResponseData;
 import com.fsse2401.project_harry.data.transaction.dto.response.TransactionResponseDto;
 import com.fsse2401.project_harry.data.transaction.dto.response.TransactionSuccessDto;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/transaction")
+@CrossOrigin({EnvConfig.DEV_BASE_URL, EnvConfig.PROD_S3_BASE_URL, EnvConfig.PROD_BASE_URL})
 public class TransactionApi {
     private  final TransactionService transactionService;
 
